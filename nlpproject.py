@@ -37,11 +37,14 @@ def contRate(text):
     normedRate = (numTimes / len(text)) * 1000
     return normedRate
 
-print("FILE NAME\tREGISTER\tDISCOURE MARKERS\tFIRST PERSON\tCONTRACTIONS")
+output = open("analysis_results.tsv","w+")
+
+output.write("FILE NAME\tREGISTER\tDISCOURE MARKERS\tFIRST PERSON\tCONTRACTIONS")
 for filename in os.listdir('Mini-CORE'):
     f = open(os.path.join('./Mini-CORE', filename),"r")
     raw_text = f.read().lower()
     tokens = nltk.word_tokenize(raw_text)
     text = nltk.Text(tokens)
     register = filename[2:4]
-    print(filename + "\t" + register + "\t{:.2f}".format(discRate(text)) + "\t{:.2f}".format(proRate(text)) + "\t{:.2f}".format(contRate(text)))
+    output.write(filename + "\t" + register + "\t{:.2f}".format(discRate(text)) + "\t{:.2f}".format(proRate(text)) + "\t{:.2f}".format(contRate(text)))
+print("Analysis finished.")

@@ -102,3 +102,6 @@ ENV/
 
 #example corpora
 Mini-CORE
+
+#results files
+analysis_results.tsv
