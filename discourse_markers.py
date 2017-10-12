@@ -1,0 +1,1 @@
+markers = {"you know", "actually", "basically", "like", "I mean", "okay", "so", "oh", "well", "now", "then", "you know", "because", "and", "but", "or", "in fact", "on the other hand", "frankly", "as a matter of fact", "first", "next", "then"}
