@@ -9,12 +9,8 @@ import nltk
 
 from discourse_markers import markers
 from first_person_pronouns import pronouns
-from test_document import test
-
-# defaults for testing
-# raw_text = test
-# register = "HG2G"
-# filename = "test_file"
+from test_file import test
+from test_file2 import test as test2
 
 def discRate(text):
     numTimes = 0
@@ -32,19 +28,34 @@ def proRate(text):
     normedRate = (numTimes / len(text)) * 1000
     return normedRate
 
-def contRate(text):
-    numTimes = 50
-    normedRate = (numTimes / len(text)) * 1000
+def contRate(raw_text):
+    numTimes = 0
+    contraction_re = r"\s([a-zA-Z]+'[a-zA-Z]+)\s"
+    for match in re.findall(contraction_re, raw_text):
+        numTimes += 1
+    normedRate = (numTimes / len(raw_text)) * 1000
     return normedRate
 
 output = open("analysis_results.tsv","w+")
 
-output.write("FILE NAME\tREGISTER\tDISCOURE MARKERS\tFIRST PERSON\tCONTRACTIONS")
+output.write("FILE NAME\tREGISTER\tDISCOURSE MARKERS\tFIRST PERSON\tCONTRACTIONS\n")
+
+def runTest(testStr, testNum):
+    raw_text = testStr.lower()
+    tokens = nltk.word_tokenize(raw_text)
+    text = nltk.Text(tokens)
+    register = "test" + str(testNum)
+    filename = "test_file" + str(testNum)
+    output.write(filename + "\t" + register + "\t{:.4f}".format(discRate(text)) + "\t{:.4f}".format(proRate(text)) + "\t{:.4f}\n".format(contRate(raw_text)))
+
+runTest(test, 1)
+runTest(test2, 2)
+
 for filename in os.listdir('Mini-CORE'):
     f = open(os.path.join('./Mini-CORE', filename),"r")
     raw_text = f.read().lower()
     tokens = nltk.word_tokenize(raw_text)
     text = nltk.Text(tokens)
     register = filename[2:4]
-    output.write(filename + "\t" + register + "\t{:.2f}".format(discRate(text)) + "\t{:.2f}".format(proRate(text)) + "\t{:.2f}".format(contRate(text)))
+    output.write(filename + "\t" + register + "\t{:.4f}".format(discRate(text)) + "\t{:.4f}".format(proRate(text)) + "\t{:.4f}\n".format(contRate(raw_text)))
 print("Analysis finished.")

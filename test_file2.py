@@ -1,0 +1,1 @@
+test = "Hey this text'll have 3 contractions in it and a total of 75 tokens so that it has a rate of 40.0000. Um, it'll also say uh and other discourse markers 5 times so that has a rate of 66.6666. Hopefully it'll work - I wanna get an A on this assignment. Oh, pronouns have a rate of 13.3333."
